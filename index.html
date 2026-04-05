@@ -339,7 +339,7 @@
 
     <!-- Corporate -->
     <!-- 🎬 Remplace "sept.mp4" par le nom de ta vidéo dans pics/ -->
-    <div class="witem wi-1 reveal" data-video="pics/vid1.mov">
+    <div class="witem wi-1 reveal" data-vimeo="1180288832">
       <div class="witem-inner">
         <img src="pics/people.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       </div>
@@ -352,7 +352,7 @@
 
     <!-- Mariage -->
     <!-- 🎬 Remplace "six.mp4" par le nom de ta vidéo dans pics/ -->
-    <div class="witem wi-2 reveal" data-video="pics/vid2.mov">
+    <div class="witem wi-2 reveal" data-vimeo="1180291332">
       <div class="witem-inner">
         <img src="pics/Afri2.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       </div>
@@ -365,7 +365,7 @@
 
     <!-- Documentaire -->
     <!-- 🎬 Remplace "onze.mp4" par le nom de ta vidéo dans pics/ -->
-    <div class="witem wi-3 reveal" data-video="pics/vid3.mov">
+    <div class="witem wi-3 reveal" data-vimeo="1180291608">
       <div class="witem-inner">
         <img src="pics/today2.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       </div>
@@ -378,7 +378,7 @@
 
     <!-- Réseaux sociaux TikTok -->
     <!-- 🎬 Remplace "huit.mp4" par le nom de ta vidéo dans pics/ -->
-    <div class="witem wi-4 reveal" data-video="pics/vid4.mov">
+    <div class="witem wi-4 reveal" data-vimeo="1180292272">
       <div class="witem-inner">
         <img src="pics/moo.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       </div>
@@ -391,7 +391,7 @@
 
     <!-- Court-métrage -->
     <!-- 🎬 Remplace "neuf.mp4" par le nom de ta vidéo dans pics/ -->
-    <div class="witem wi-5 reveal" data-video="pics/vid5.mov">
+    <div class="witem wi-5 reveal" data-vimeo="1180292552">
       <div class="witem-inner">
         <img src="pics/cocokpmg.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
       </div>
@@ -440,14 +440,12 @@
     opacity:0.7;
   "></div>
 
-  <video id="modal-video" controls style="
-    max-width:90vw;
-    max-height:80vh;
-    border-radius:8px;
-    background:#000;
-  "></video>
+  <div id="modal-video" style="
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  "></div>
 </div>
-
 <script>
   const modal      = document.getElementById('video-modal');
   const modalVideo = document.getElementById('modal-video');
@@ -456,31 +454,30 @@
 
   document.querySelectorAll('.witem').forEach(item => {
     item.addEventListener('click', () => {
-      const src   = item.dataset.video;
-      const title = item.querySelector('.witem-name')?.textContent || '';
-      if (!src) return;
+      const vimeoId = item.dataset.vimeo;
+      const title   = item.querySelector('.witem-name')?.textContent || '';
+      if (!vimeoId) return;
 
-      modalVideo.src = src;
       modalTitle.textContent = title;
+      modalVideo.innerHTML = `
+        <iframe
+          src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=D4572A&title=0&byline=0&portrait=0"
+          width="900"
+          height="506"
+          allow="autoplay; fullscreen; picture-in-picture"
+          style="border:none;border-radius:8px;max-width:90vw;max-height:80vh;display:block;"
+        ></iframe>`;
       modal.style.display = 'flex';
-      modalVideo.play();
     });
   });
 
   modalClose.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', e => {
-    if (e.target === modal) closeModal();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-  });
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   function closeModal() {
     modal.style.display = 'none';
-    modalVideo.pause();
-    modalVideo.src = '';
+    modalVideo.innerHTML = '';
   }
 </script>
 
