@@ -336,31 +336,31 @@
     <div class="works-tabs reveal"><button class="wtab active">Vidéos</button></div>
     <div class="wgrid">
 
-      <div class="witem wi-1 reveal" data-vimeo="1180288832">
+      <div class="witem wi-1 reveal" data-youtube="l5Sea6Nqpww">
         <div class="witem-inner"><img src="pics/people.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="witem-overlay"><div class="witem-tag">Séminaire de formation · 2025</div><div class="witem-name">KPMG CI</div></div>
         <div class="witem-play"></div>
       </div>
 
-      <div class="witem wi-2 reveal" data-vimeo="1180291332">
+      <div class="witem wi-2 reveal" data-youtube="lCGiLex06Zs">
         <div class="witem-inner"><img src="pics/Afri2.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="witem-overlay"><div class="witem-tag">Afterwork · 2025</div><div class="witem-name">Africafé</div></div>
         <div class="witem-play"></div>
       </div>
 
-      <div class="witem wi-3 reveal" data-vimeo="1180291608">
+      <div class="witem wi-3 reveal" data-youtube="oadnhkAnjkQ">
         <div class="witem-inner"><img src="pics/today2.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="witem-overlay"><div class="witem-tag">TODAY · 2025</div><div class="witem-name">ESCA</div></div>
         <div class="witem-play"></div>
       </div>
 
-      <div class="witem wi-4 reveal" data-vimeo="1180292272">
+      <div class="witem wi-4 reveal" data-youtube="QEDvsvQ6nMs">
         <div class="witem-inner"><img src="pics/moo.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="witem-overlay"><div class="witem-tag">Salon de thé · 2025</div><div class="witem-name">MOOBEST</div></div>
         <div class="witem-play"></div>
       </div>
 
-      <div class="witem wi-5 reveal" data-vimeo="1180292552">
+      <div class="witem wi-5 reveal" data-youtube="NTlsAZRX0G4">
         <div class="witem-inner"><img src="pics/cocokpmg.jpeg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"/></div>
         <div class="witem-overlay"><div class="witem-tag">Team building · 2025</div><div class="witem-name">KPMG CI</div></div>
         <div class="witem-play"></div>
@@ -386,21 +386,17 @@
 
   document.querySelectorAll('.witem').forEach(item => {
     item.addEventListener('click', () => {
-      const vimeoId = item.dataset.vimeo;
-      const title   = item.querySelector('.witem-name')?.textContent || '';
-      if (!vimeoId) return;
+      const ytId  = item.dataset.youtube;
+      const title = item.querySelector('.witem-name')?.textContent || '';
+      if (!ytId) return;
 
-      const isMobile = window.innerWidth <= 960;
-
-      if (isMobile) {
-        // Sur mobile : ouvre directement Vimeo dans le navigateur
-        window.open(`https://vimeo.com/${vimeoId}`, '_blank');
-        return;
-      }
-
-      // Desktop : modale normale
       modalTitle.textContent = title;
-      modalVideo.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=D4572A&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      modalVideo.innerHTML = `
+        <iframe
+          src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>`;
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     });
