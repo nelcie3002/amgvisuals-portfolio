@@ -471,36 +471,45 @@
   </div>
 
   <script>
-    const modal      = document.getElementById('video-modal');
-    const modalVideo = document.getElementById('modal-video');
-    const modalTitle = document.getElementById('modal-title');
-    const modalClose = document.getElementById('modal-close');
+  const modal      = document.getElementById('video-modal');
+  const modalVideo = document.getElementById('modal-video');
+  const modalTitle = document.getElementById('modal-title');
+  const modalClose = document.getElementById('modal-close');
 
-    document.querySelectorAll('.witem').forEach(item => {
-      item.addEventListener('click', () => {
-        const vimeoId = item.dataset.vimeo;
-        const title   = item.querySelector('.witem-name')?.textContent || '';
-        if (!vimeoId) return;
-        const isMobile = window.innerWidth <= 960;
-        const w = isMobile ? '100%' : '900px';
-        const h = isMobile ? '56vw' : '506px';
-        modalTitle.textContent = title;
-        modalVideo.innerHTML = `
-          <iframe
-            src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=D4572A&title=0&byline=0&portrait=0"
-            width="${w}" height="${h}"
-            allow="autoplay; fullscreen; picture-in-picture"
-            style="border:none;border-radius:8px;max-width:95vw;display:block;"
-          ></iframe>`;
-        modal.style.display = 'flex';
-      });
+  document.querySelectorAll('.witem').forEach(item => {
+    item.addEventListener('click', () => {
+      const vimeoId = item.dataset.vimeo;
+      const title   = item.querySelector('.witem-name')?.textContent || '';
+      if (!vimeoId) return;
+
+      const vw = window.innerWidth;
+      const isMobile = vw <= 960;
+      const width  = isMobile ? vw - 32 : Math.min(960, vw - 80);
+      const height = Math.round(width * 9 / 16);
+
+      modalTitle.textContent = title;
+      modalVideo.innerHTML = `
+        <iframe
+          src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=D4572A&title=0&byline=0&portrait=0"
+          width="${width}"
+          height="${height}"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          style="border:none;border-radius:8px;display:block;"
+        ></iframe>`;
+      modal.style.display = 'flex';
     });
+  });
 
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-    function closeModal() { modal.style.display = 'none'; modalVideo.innerHTML = ''; }
-  </script>
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function closeModal() {
+    modal.style.display = 'none';
+    modalVideo.innerHTML = '';
+  }
+</script>
 
   <!-- ABOUT -->
   <section id="about">
