@@ -380,32 +380,42 @@
   </div>
 
   <script>
-    const modal      = document.getElementById('video-modal');
-    const modalVideo = document.getElementById('modal-video');
-    const modalTitle = document.getElementById('modal-title');
-    const modalClose = document.getElementById('modal-close');
+  const modal      = document.getElementById('video-modal');
+  const modalVideo = document.getElementById('modal-video');
+  const modalTitle = document.getElementById('modal-title');
+  const modalClose = document.getElementById('modal-close');
 
-    document.querySelectorAll('.witem').forEach(item => {
-      item.addEventListener('click', () => {
-        const vimeoId = item.dataset.vimeo;
-        const title   = item.querySelector('.witem-name')?.textContent || '';
-        if (!vimeoId) return;
-        modalTitle.textContent = title;
-        modalVideo.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=D4572A&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
+  document.querySelectorAll('.witem').forEach(item => {
+    item.addEventListener('click', () => {
+      const vimeoId = item.dataset.vimeo;
+      const title   = item.querySelector('.witem-name')?.textContent || '';
+      if (!vimeoId) return;
+
+      const isMobile = window.innerWidth <= 960;
+
+      if (isMobile) {
+        // Sur mobile : ouvre directement Vimeo dans le navigateur
+        window.open(`https://vimeo.com/${vimeoId}`, '_blank');
+        return;
+      }
+
+      // Desktop : modale normale
+      modalTitle.textContent = title;
+      modalVideo.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=D4572A&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
     });
+  });
 
-    function closeModal() {
-      modal.classList.remove('open');
-      modalVideo.innerHTML = '';
-      document.body.style.overflow = '';
-    }
-    modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-  </script>
+  function closeModal() {
+    modal.classList.remove('open');
+    modalVideo.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
 
   <section id="about">
     <div class="about-visual-mobile reveal">
