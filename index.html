@@ -483,9 +483,21 @@
       if (!vimeoId) return;
 
       const vw = window.innerWidth;
+      const vh = window.innerHeight;
       const isMobile = vw <= 960;
-      const width  = isMobile ? vw - 32 : Math.min(960, vw - 80);
-      const height = Math.round(width * 9 / 16);
+
+      let width, height;
+      if (isMobile) {
+        width  = vw;
+        height = Math.round(vw * 9 / 16);
+      } else {
+        width  = Math.round(vh * 16 / 9 * 0.85);
+        height = Math.round(vh * 0.85);
+        if (width > vw - 80) {
+          width  = vw - 80;
+          height = Math.round(width * 9 / 16);
+        }
+      }
 
       modalTitle.textContent = title;
       modalVideo.innerHTML = `
@@ -495,7 +507,15 @@
           height="${height}"
           allow="autoplay; fullscreen; picture-in-picture"
           allowfullscreen
-          style="border:none;border-radius:8px;display:block;"
+          style="
+            border: none;
+            border-radius: 8px;
+            display: block;
+            width: ${width}px;
+            height: ${height}px;
+            min-width: ${width}px;
+            min-height: ${height}px;
+          "
         ></iframe>`;
       modal.style.display = 'flex';
     });
