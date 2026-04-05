@@ -190,8 +190,35 @@
       .anum-val { font-size: 40px; }
       #cta { padding: 70px 20px; }
       .cta-grid { flex-direction: column; align-items: center; gap: 12px; }
-      .cta-card { width: 100%; max-width: 340px; padding: 20px 22px; flex-direction: row; gap: 16px; }
-      .cta-card-label, .cta-card-val { text-align: left; }
+      .cta-card {
+  width: 100%;
+  max-width: 340px;
+  padding: 20px 22px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+.cta-card-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-align: left;
+}
+.cta-card-val {
+  font-size: 13px;
+  text-align: left;
+  word-break: break-all;
+}
+.cta-card .cta-icon-box {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+}
+.cta-card > div:last-of-type {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+}
       footer { padding: 24px 20px; flex-direction: column; gap: 14px; text-align: center; }
     }
     @media (max-width: 400px) {
